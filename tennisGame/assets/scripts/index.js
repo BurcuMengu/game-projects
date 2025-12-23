@@ -41,6 +41,7 @@ window.addEventListener("load", function() {
     this.requestAnimationFrame(animate)
 })
 
+
 /*let gameRunning = false;
 let stopClickCount = 0;
 
