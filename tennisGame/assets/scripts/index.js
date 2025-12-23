@@ -4,6 +4,8 @@ class Game {
         this.ctx = context;
         this.width = canvas.width;
         this.height = canvas.height;
+        this.baseHeight = 400;
+        this.ratio = this.height / this.baseHeight;
         this.ball = new Ball(this);
 
         this.paddleWidth = 20;
