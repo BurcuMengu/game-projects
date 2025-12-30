@@ -8,6 +8,8 @@ class Game {
         this.ratio = this.height / this.baseHeight;
         this.background = new Background(this);
         this.player = new Player(this);
+        this.obstacles = [];
+        this.numberOfObstacles = 10;
         this.gravity;
         this.speed;
 
@@ -32,7 +34,7 @@ class Game {
     resize (width, height) {
         this.canvas.width = width;
         this.canvas.height = height;
-        this.ctx.fillStyle = "red";
+        this.ctx.fillStyle = "blue";
         this.width = this.canvas.width;
         this.height = this.canvas.height;
         this.ratio = this.height / this.baseHeight;
@@ -41,6 +43,10 @@ class Game {
         this.speed = 3 * this.ratio;
         this.background.resize();
         this.player.resize();
+        this.createObstacles();
+        this.obstacles.forEach(obstacle => {
+            obstacle.resize();
+        })
     }
 
     render() {
@@ -48,6 +54,18 @@ class Game {
         this.background.draw();
         this.player.update();
         this.player.draw();
+        this.obstacles.forEach(obstacle => {
+            obstacle.update();
+            obstacle.draw();
+        })
+    }
+    createObstacles() {
+        this.obstacles = [];
+        const firstX = 100;
+        const obstacleSpacing = 100;
+        for (let i = 0; i < this.numberOfObstacles; i++){
+            this.obstacles.push(new Obstacle(this, firstX + i * obstacleSpacing))
+        }
     }
 }
 
