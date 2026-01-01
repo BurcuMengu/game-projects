@@ -9,9 +9,11 @@ class Game {
         this.background = new Background(this);
         this.player = new Player(this);
         this.obstacles = [];
-        this.numberOfObstacles = 10;
+        this.numberOfObstacles = 2;
         this.gravity;
         this.speed;
+        this.score;
+        this.gameOver;
 
         this.resize(window.innerWidth, window.innerHeight);
 
@@ -35,6 +37,7 @@ class Game {
         this.canvas.width = width;
         this.canvas.height = height;
         this.ctx.fillStyle = "blue";
+        this.ctx.font = "15px Bungee"
         this.width = this.canvas.width;
         this.height = this.canvas.height;
         this.ratio = this.height / this.baseHeight;
@@ -47,11 +50,14 @@ class Game {
         this.obstacles.forEach(obstacle => {
             obstacle.resize();
         })
+        this.score = 0;
+        this.gameOver = false;
     }
 
     render() {
         this.background.update();
         this.background.draw();
+        this.drawStatueText();
         this.player.update();
         this.player.draw();
         this.obstacles.forEach(obstacle => {
@@ -67,6 +73,9 @@ class Game {
             this.obstacles.push(new Obstacle(this, firstX + i * obstacleSpacing))
         }
     }
+    drawStatueText() {
+        this.ctx.fillText("Score: " + this.score, 10, 30)
+    }
 }
 
 window.addEventListener("load", function(){
@@ -80,7 +89,7 @@ window.addEventListener("load", function(){
     function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         game.render();
-        requestAnimationFrame(animate)
+        if(!game.gameOver) requestAnimationFrame(animate)
     }
     this.requestAnimationFrame(animate)
 })
