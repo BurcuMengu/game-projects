@@ -38,6 +38,7 @@ class Game {
         this.canvas.height = height;
         this.ctx.fillStyle = "blue";
         this.ctx.font = "15px Bungee"
+        this.ctx.textAlign = "right"
         this.width = this.canvas.width;
         this.height = this.canvas.height;
         this.ratio = this.height / this.baseHeight;
@@ -74,7 +75,9 @@ class Game {
         }
     }
     drawStatueText() {
-        this.ctx.fillText("Score: " + this.score, 10, 30)
+        this.ctx.save();
+        this.ctx.fillText("Score: " + this.score, this.width - 10, 30)
+        this.ctx.restore();
     }
 }
 
