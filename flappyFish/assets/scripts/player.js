@@ -47,7 +47,7 @@ class Player {
         this.collisionRadius = this.width * 0.5;
         this.collisionX = this.x + this.width * 0.5;
         this.collided = false;
-        this.barSize = Math.ceil(5 * this.game.ratio);
+        this.barSize = Math.floor(5 * this.game.ratio);
     }
     startCharge() {
         this.charging = true;
@@ -64,17 +64,18 @@ class Player {
         return this.y >= this.game.height - this.height;
     }
     handleEnergy() {
-        if (this.energy < this.maxEnergy) {
-            this.energy += 0.1;
-        }
-        if (this.charging) {
-            this.energy -= 1;
-            if (this.energy <= 0) {
-                this.energy = 0;
-                this.stopCharge()
+        if (this.game.eventUpdate) {
+            if (this.energy < this.maxEnergy) {
+                this.energy += 1;
+            }
+            if (this.charging) {
+                this.energy -= 6;
+                if (this.energy <= 0) {
+                    this.energy = 0;
+                    this.stopCharge()
+                }
             }
         }
-
     }
     flap() {
         this.stopCharge()
